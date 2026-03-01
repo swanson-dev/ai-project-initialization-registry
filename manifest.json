@@ -1,0 +1,86 @@
+{
+  "version": "0.1.0",
+  "published_at": "2026-03-01T00:00:00Z",
+  "scaffolds": [
+    {
+      "id": "standard-planning-plus-code",
+      "path": "scaffolds/standard-planning-plus-code"
+    }
+  ],
+  "agent_packs": [
+    {
+      "id": "core",
+      "path": "agent-packs/core"
+    }
+  ],
+  "skills": [
+    {
+      "id": "documentation-hygiene",
+      "path": "skills/documentation-hygiene"
+    },
+    {
+      "id": "status-and-changelog",
+      "path": "skills/status-and-changelog"
+    },
+    {
+      "id": "ui-ux-approval-gate",
+      "path": "skills/ui-ux-approval-gate"
+    },
+    {
+      "id": "tech-stack-guardrails",
+      "path": "skills/tech-stack-guardrails"
+    },
+    {
+      "id": "feature-doc-auto",
+      "path": "skills/feature-doc-auto"
+    }
+  ],
+  "tech_stack_recipes": [
+    {
+      "id": "nextjs",
+      "path": "tech-stacks/nextjs/recipe.md"
+    },
+    {
+      "id": "go",
+      "path": "tech-stacks/go/recipe.md"
+    }
+  ],
+  "file_templates": [
+    {
+      "id": "project-brief",
+      "path": "file-templates/project/project-brief.md"
+    },
+    {
+      "id": "requirements",
+      "path": "file-templates/project/requirements.md"
+    },
+    {
+      "id": "status-update",
+      "path": "file-templates/status/status-update.md"
+    },
+    {
+      "id": "changelog",
+      "path": "file-templates/status/changelog.md"
+    },
+    {
+      "id": "architecture-overview",
+      "path": "file-templates/architecture/architecture-overview.md"
+    },
+    {
+      "id": "api-contract",
+      "path": "file-templates/architecture/api-contract.md"
+    },
+    {
+      "id": "ui-spec",
+      "path": "file-templates/ui-ux/ui-spec.md"
+    },
+    {
+      "id": "wireframes-request",
+      "path": "file-templates/ui-ux/wireframes-request.md"
+    },
+    {
+      "id": "ui-approval-checklist",
+      "path": "file-templates/ui-ux/ui-approval-checklist.md"
+    }
+  ]
+}

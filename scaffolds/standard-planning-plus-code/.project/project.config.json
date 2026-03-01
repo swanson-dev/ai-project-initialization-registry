@@ -1,0 +1,13 @@
+{
+  "description": "Placeholder project configuration for bootstrap metadata.",
+  "schema": {
+    "project_id": "string",
+    "name": "string",
+    "created_at": "ISO-8601 timestamp",
+    "selected_scaffold": "string",
+    "selected_tech_stack": "string",
+    "enabled_agent_packs": ["string"],
+    "enabled_skills": ["string"]
+  },
+  "note": "Values are populated by initializer tooling."
+}
