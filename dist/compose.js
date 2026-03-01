@@ -1,6 +1,6 @@
 import path from 'node:path';
 import fs from 'node:fs/promises';
-import { fetchText } from './fetch';
+import { fetchText } from './fetch.js';
 function findById(items, id) {
     const found = items?.find((item) => item.id === id);
     if (!found) {

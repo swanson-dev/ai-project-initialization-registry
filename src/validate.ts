@@ -1,4 +1,4 @@
-import { Manifest } from './types';
+import { Manifest } from './types.js';
 
 export function validateManifest(manifest: Manifest): void {
   const requiredKeys = [

@@ -1,7 +1,7 @@
 import path from 'node:path';
 import fs from 'node:fs/promises';
-import { fetchText } from './fetch';
-import { ComposeSelection, Manifest } from './types';
+import { fetchText } from './fetch.js';
+import { ComposeSelection, Manifest } from './types.js';
 
 function findById(items: { id: string; path: string }[] | undefined, id: string): { id: string; path: string } {
   const found = items?.find((item) => item.id === id);

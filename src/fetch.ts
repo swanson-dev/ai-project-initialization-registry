@@ -1,4 +1,4 @@
-import { Manifest, RegistrySource } from './types';
+import { Manifest, RegistrySource } from './types.js';
 
 const DEFAULT_OWNER = 'swanson-dev';
 const DEFAULT_REPO = 'ai-project-initialization';

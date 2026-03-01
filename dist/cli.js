@@ -1,4 +1,4 @@
-import { runInit } from './init';
+import { runInit } from './init.js';
 function printUsage() {
     console.log('Usage: project-os init [--ref <branch|tag|commitSHA>] [--registry <baseUrl>] [--yes] [--debug]');
 }

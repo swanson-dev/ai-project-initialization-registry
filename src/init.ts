@@ -1,12 +1,12 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { composeFromManifest } from './compose';
-import { fetchManifest, fetchText, resolveRegistrySource } from './fetch';
-import { writeMetadataFiles } from './metadata';
-import { promptSelections } from './prompt';
-import { fillTemplate } from './template';
-import { InitOptions } from './types';
-import { validateManifest } from './validate';
+import { composeFromManifest } from './compose.js';
+import { fetchManifest, fetchText, resolveRegistrySource } from './fetch.js';
+import { writeMetadataFiles } from './metadata.js';
+import { promptSelections } from './prompt.js';
+import { fillTemplate } from './template.js';
+import { InitOptions } from './types.js';
+import { validateManifest } from './validate.js';
 
 const CLI_VERSION = '0.0.1';
 

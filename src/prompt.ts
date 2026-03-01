@@ -1,15 +1,15 @@
 import inquirer from "inquirer";
-import { Manifest, UserSelections } from "./types.js";
+import { Manifest, ManifestItem, UserSelections } from "./types.js";
 
 export async function promptSelections(
   manifest: Manifest,
   yes: boolean,
 ): Promise<UserSelections> {
-  const techChoices = manifest.tech_stack_recipes.map((recipe) => recipe.id);
+  const techChoices = manifest.tech_stack_recipes.map((recipe: ManifestItem) => recipe.id);
   const productPacks = (manifest.product_type_packs ?? []).map(
-    (pack) => pack.id,
+    (pack: ManifestItem) => pack.id,
   );
-  const skillChoices = manifest.skills.map((skill) => skill.id);
+  const skillChoices = manifest.skills.map((skill: ManifestItem) => skill.id);
 
   if (yes) {
     return {
@@ -20,9 +20,7 @@ export async function promptSelections(
     };
   }
 
-  const { descriptionMode } = await inquirer.prompt<{
-    descriptionMode: "provide" | "generate";
-  }>([
+  const { descriptionMode } = (await inquirer.prompt([
     {
       type: "list",
       name: "descriptionMode",
@@ -32,11 +30,11 @@ export async function promptSelections(
         { name: "Generate placeholder", value: "generate" },
       ],
     },
-  ]);
+  ])) as { descriptionMode: "provide" | "generate" };
 
   let description = "TODO: Add project description";
   if (descriptionMode === "provide") {
-    const answer = await inquirer.prompt<{ description: string }>([
+    const answer = (await inquirer.prompt([
       {
         type: "input",
         name: "description",
@@ -44,15 +42,11 @@ export async function promptSelections(
         validate: (value: string) =>
           value.trim().length > 0 ? true : "Description is required",
       },
-    ]);
+    ])) as { description: string };
     description = answer.description.trim();
   }
 
-  const answers = await inquirer.prompt<{
-    preferredTechnology: string;
-    productPackId: string;
-    selectedSkillIds: string[];
-  }>([
+  const answers = (await inquirer.prompt([
     {
       type: "list",
       name: "preferredTechnology",
@@ -73,7 +67,11 @@ export async function promptSelections(
       choices: skillChoices,
       default: [...skillChoices],
     },
-  ]);
+  ])) as {
+    preferredTechnology: string;
+    productPackId: string;
+    selectedSkillIds: string[];
+  };
 
   return {
     description,

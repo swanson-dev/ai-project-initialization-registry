@@ -11,7 +11,7 @@ export async function promptSelections(manifest, yes) {
             selectedSkillIds: [...skillChoices],
         };
     }
-    const { descriptionMode } = await inquirer.prompt([
+    const { descriptionMode } = (await inquirer.prompt([
         {
             type: "list",
             name: "descriptionMode",
@@ -21,20 +21,20 @@ export async function promptSelections(manifest, yes) {
                 { name: "Generate placeholder", value: "generate" },
             ],
         },
-    ]);
+    ]));
     let description = "TODO: Add project description";
     if (descriptionMode === "provide") {
-        const answer = await inquirer.prompt([
+        const answer = (await inquirer.prompt([
             {
                 type: "input",
                 name: "description",
                 message: "Enter project description:",
                 validate: (value) => value.trim().length > 0 ? true : "Description is required",
             },
-        ]);
+        ]));
         description = answer.description.trim();
     }
-    const answers = await inquirer.prompt([
+    const answers = (await inquirer.prompt([
         {
             type: "list",
             name: "preferredTechnology",
@@ -55,7 +55,7 @@ export async function promptSelections(manifest, yes) {
             choices: skillChoices,
             default: [...skillChoices],
         },
-    ]);
+    ]));
     return {
         description,
         preferredTechnology: answers.preferredTechnology,
