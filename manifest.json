@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0",
+  "version": "0.2.0",
   "published_at": "2026-03-01T00:00:00Z",
   "scaffolds": [
     {
@@ -11,6 +11,50 @@
     {
       "id": "core",
       "path": "agent-packs/core"
+    }
+  ],
+  "agent_pack_files": [
+    {
+      "id": "core-agent-guidelines",
+      "path": "agent-packs/core/agent-guidelines.md"
+    },
+    {
+      "id": "core-file-placement-rules",
+      "path": "agent-packs/core/file-placement-rules.md"
+    },
+    {
+      "id": "core-documentation-rules",
+      "path": "agent-packs/core/documentation-rules.md"
+    },
+    {
+      "id": "core-ui-ux-gate",
+      "path": "agent-packs/core/ui-ux-gate.md"
+    },
+    {
+      "id": "core-tech-stack-guardrails",
+      "path": "agent-packs/core/tech-stack-guardrails.md"
+    },
+    {
+      "id": "core-definition-of-done",
+      "path": "agent-packs/core/definition-of-done.md"
+    },
+    {
+      "id": "core-app-folder-rule",
+      "path": "agent-packs/core/app-folder-rule.md"
+    },
+    {
+      "id": "core-output-rules",
+      "path": "agent-packs/core/OUTPUT_RULES.md"
+    },
+    {
+      "id": "core-system-prompt",
+      "path": "agent-packs/core/core-system-prompt.md"
+    }
+  ],
+  "product_type_packs": [
+    {
+      "id": "ecommerce",
+      "path": "agent-packs/product-types/ecommerce/pack.md"
     }
   ],
   "skills": [
@@ -81,6 +125,12 @@
     {
       "id": "ui-approval-checklist",
       "path": "file-templates/ui-ux/ui-approval-checklist.md"
+    }
+  ],
+  "registry_docs": [
+    {
+      "id": "project-contract",
+      "path": "project-contract.md"
     }
   ]
 }
