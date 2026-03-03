@@ -8,7 +8,8 @@
   },
   "scripts": {
     "build": "tsc",
-    "start": "node dist/cli.js"
+    "start": "node dist/cli.js",
+    "test": "npm run build && node --test dist/validate.test.js dist/resolve-selections.test.js dist/init.test.js dist/instantiate-templates.test.js dist/provenance.test.js dist/materialize-raw-assets.test.js dist/doctor.test.js dist/freeze.test.js dist/reconcile.test.js"
   },
   "engines": {
     "node": ">=18"

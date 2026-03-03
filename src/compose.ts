@@ -2,6 +2,7 @@ import path from 'node:path';
 import fs from 'node:fs/promises';
 import { fetchText } from './fetch.js';
 import { ComposeSelection, Manifest } from './types.js';
+import { ensureTrackedDir, recordCreatedFile, WriteContext } from './write-context.js';
 
 function findById(items: { id: string; path: string }[] | undefined, id: string): { id: string; path: string } {
   const found = items?.find((item) => item.id === id);
@@ -27,6 +28,17 @@ function findRelatedFilePaths(manifest: Manifest, prefixId: string): string[] {
   return paths;
 }
 
+export function planComposePaths(manifest: Manifest, scaffoldId: string): string[] {
+  const selectedPaths = new Set<string>();
+
+  selectedPaths.add(findById(manifest.scaffolds, scaffoldId).path);
+  for (const relativePath of findRelatedFilePaths(manifest, scaffoldId)) {
+    selectedPaths.add(relativePath);
+  }
+
+  return [...selectedPaths].sort((left, right) => left.localeCompare(right));
+}
+
 async function ensureNoConflicts(pathsToCreate: string[]): Promise<void> {
   for (const relativePath of pathsToCreate) {
     const fullPath = path.join(process.cwd(), relativePath);
@@ -41,46 +53,31 @@ async function ensureNoConflicts(pathsToCreate: string[]): Promise<void> {
   }
 }
 
-async function writeFetchedFile(rawBase: string, relativePath: string): Promise<void> {
+async function writeFetchedFile(rawBase: string, relativePath: string, context?: WriteContext): Promise<void> {
   const content = await fetchText(rawBase, relativePath);
   const destination = path.join(process.cwd(), relativePath);
-  await fs.mkdir(path.dirname(destination), { recursive: true });
+  if (context) {
+    await ensureTrackedDir(path.dirname(relativePath), context);
+  } else {
+    await fs.mkdir(path.dirname(destination), { recursive: true });
+  }
   await fs.writeFile(destination, content, 'utf8');
+  if (context) {
+    recordCreatedFile(context, relativePath);
+  }
 }
 
-export async function composeFromManifest(rawBase: string, manifest: Manifest, selection: ComposeSelection): Promise<string[]> {
-  const selectedPaths = new Set<string>();
-
-  selectedPaths.add(findById(manifest.scaffolds, selection.scaffoldId).path);
-  selectedPaths.add(findById(manifest.agent_packs, selection.corePackId).path);
-
-  for (const p of findRelatedFilePaths(manifest, selection.corePackId)) {
-    selectedPaths.add(p);
-  }
-
-  if (selection.productPackId) {
-    const pack = findById((manifest.product_type_packs as { id: string; path: string }[] | undefined) ?? [], selection.productPackId);
-    selectedPaths.add(pack.path);
-    for (const p of findRelatedFilePaths(manifest, selection.productPackId)) {
-      selectedPaths.add(p);
-    }
-  }
-
-  for (const skillId of selection.skillIds) {
-    const skill = findById(manifest.skills, skillId);
-    selectedPaths.add(skill.path);
-    for (const p of findRelatedFilePaths(manifest, skillId)) {
-      selectedPaths.add(p);
-    }
-  }
-
-  selectedPaths.add(findById(manifest.tech_stack_recipes, selection.techStackRecipeId).path);
-
-  const explicitPaths = [...selectedPaths];
+export async function composeFromManifest(
+  rawBase: string,
+  manifest: Manifest,
+  selection: ComposeSelection,
+  context?: WriteContext,
+): Promise<string[]> {
+  const explicitPaths = planComposePaths(manifest, selection.scaffoldId);
   await ensureNoConflicts(explicitPaths);
 
   for (const relativePath of explicitPaths) {
-    await writeFetchedFile(rawBase, relativePath);
+    await writeFetchedFile(rawBase, relativePath, context);
   }
 
   return explicitPaths;
